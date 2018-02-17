@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>playSound</title>
+	<script type="text/javascript" src="paper.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.9/howler.core.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="circle.css">
+	<script type="text/paperscript" canvas="myCanvas">
+		var circles = [];
+		function onKeyDown(event) {
+			var maxPoint = new Point(view.size.width, view.size.height);
+			var randomPoint = Point.random();
+			var newPoint = randomPoint*maxPoint;
+			var newCircle = new Path.Circle(newPoint,150);
+			newCircle.fillColor=getRandomColor();
+			circles.push(newCircle);
+			var sound = new Howl({src:"sounds/bubbles.mp3"});
+			sound.play();
+		}
+
+		function onFrame(event) {
+			for(var i=0; i<circles.length; i++) {
+				circles[i].fillColor.hue += 1;
+				circles[i].scale(.9);
+			}
+		}
+
+		function getRandomColor() {
+  			var letters = '0123456789ABCDEF';
+  			var color = '#';
+  			for (var i = 0; i < 6; i++) {
+    				color += letters[Math.floor(Math.random() * 16)];
+  			}
+  			return color;
+		}
+
+	</script>
+
+
+</head>
+<body>
+	<canvas id="myCanvas" resize></canvas>
+</body>
+</html>
